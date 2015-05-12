@@ -50,7 +50,7 @@ public class TotalFreedomMod extends JavaPlugin
     //
     public static String buildNumber = "1";
     public static String buildDate = TotalFreedomMod.buildDate = TFM_Util.dateToString(new Date());
-    public static String buildCreator = "Unknown";
+    public static String buildCreator = "Alex33856";
     //
     public static Server server;
     public static TotalFreedomMod plugin;
@@ -77,7 +77,10 @@ public class TotalFreedomMod extends JavaPlugin
     @Override
     public void onEnable()
     {
-        TFM_Log.info("Made by Madgeek1450 and Prozza");
+        TFM_Log.info("TotalFreedomMod Made by Madgeek1450 and Prozza");
+        TFM_Log.info("IslandFreedomMod Made by Alex33856, Scuph and TylerHyperHD");
+        TFM_Log.info("Both are open source: TotalFreedomMod's Github Site: https://github.com/totalfreedom/totalfreedommod.com");
+        TFM_Log.info("IslandFreedom's github site is https://github.com/IslandFreedom/IslandFreedomMod-2.0");
         TFM_Log.info("Compiled " + buildDate + " by " + buildCreator);
 
         final TFM_Util.MethodTimer timer = new TFM_Util.MethodTimer();
@@ -127,7 +130,7 @@ public class TotalFreedomMod extends JavaPlugin
         }
         catch (Exception ex)
         {
-            TFM_Log.warning("Could not load world: Flatlands");
+            TFM_Log.warning("World: Flatlands was not found or could not be loaded");
         }
 
         try
@@ -136,7 +139,7 @@ public class TotalFreedomMod extends JavaPlugin
         }
         catch (Exception ex)
         {
-            TFM_Log.warning("Could not load world: AdminWorld");
+            TFM_Log.warning("World: AdminWorld was not found or could not be loaded");
         }
 
         // Initialize game rules
@@ -201,6 +204,7 @@ public class TotalFreedomMod extends JavaPlugin
     @Override
     public void onDisable()
     {
+        TFM_Log.info("IslandFreedomMod has been disabled.");
         TFM_HTTPD_Manager.stop();
         TFM_BanManager.save();
         TFM_UuidManager.close();
