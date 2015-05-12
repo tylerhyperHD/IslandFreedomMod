@@ -42,13 +42,6 @@ public class TFM_ServerListener implements Listener
             event.setMotd(ChatColor.RED + "Server is full.");
             return;
         }
-
-        if (!TFM_ConfigEntry.SERVER_COLORFUL_MOTD.getBoolean())
-        {
-            event.setMotd(TFM_Util.colorize(TFM_ConfigEntry.SERVER_MOTD.getString()
-                    .replace("%mcversion%", TFM_ServerInterface.getVersion())));
-            return;
-        }
         
         if (TFM_ConfigEntry.ENABLE_CHAOS.getBoolean())
         {
