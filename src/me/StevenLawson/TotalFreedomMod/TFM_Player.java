@@ -1,5 +1,6 @@
 package me.StevenLawson.TotalFreedomMod;
 
+import me.StevenLawson.TotalFreedomMod.Config.TFM_Config;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

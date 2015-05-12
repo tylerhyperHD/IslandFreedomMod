@@ -3,6 +3,7 @@ package me.StevenLawson.TotalFreedomMod.Commands;
 import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
 import me.StevenLawson.TotalFreedomMod.TFM_PlayerData;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
+import me.StevenLawson.TotalFreedomMod.TotalFreedomMod;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -13,34 +14,31 @@ import org.bukkit.entity.Player;
 @CommandParameters(description = "Freeze players (toggles on and off).", usage = "/<command> [target | purge]")
 public class Command_fr extends TFM_Command
 {
-    private static boolean allFrozen = false;
-
     @Override
     public boolean run(CommandSender sender, Player sender_p, Command cmd, String commandLabel, String[] args, boolean senderIsConsole)
     {
         if (args.length == 0)
         {
-            allFrozen = !allFrozen;
+            TotalFreedomMod.allPlayersFrozen = !TotalFreedomMod.allPlayersFrozen;
 
-            if (allFrozen)
+            if (TotalFreedomMod.allPlayersFrozen)
             {
                 TFM_Util.adminAction(sender.getName(), "Freezing all players", false);
+                TotalFreedomMod.allPlayersFrozen = true;
 
-                setAllFrozen(true);
                 playerMsg("Players are now frozen.");
-
                 for (Player player : Bukkit.getOnlinePlayers())
                 {
                     if (!TFM_AdminList.isSuperAdmin(player))
                     {
-                        playerMsg(player, "You have been frozen due to rulebreakers, you will be unfrozen soon.", ChatColor.RED);
+                        playerMsg(player, "You have been frozen due to rule breaker(s), you will be unfrozen very soon.", ChatColor.RED);
                     }
                 }
             }
             else
             {
                 TFM_Util.adminAction(sender.getName(), "Unfreezing all players", false);
-                setAllFrozen(false);
+                TotalFreedomMod.allPlayersFrozen = false;
                 playerMsg("Players are now free to move.");
             }
         }
@@ -48,8 +46,15 @@ public class Command_fr extends TFM_Command
         {
             if (args[0].toLowerCase().equals("purge"))
             {
-                setAllFrozen(false);
-                TFM_Util.adminAction(sender.getName(), "Unfreezing all players", false);
+                TotalFreedomMod.allPlayersFrozen = false;
+
+                for (Player player : server.getOnlinePlayers())
+                {
+                    TFM_PlayerData playerdata = TFM_PlayerData.getPlayerData(player);
+                    playerdata.setFrozen(false);
+                }
+
+                TFM_Util.adminAction(sender.getName(), "Lifting all global and player freezes", false);
             }
             else
             {
@@ -61,7 +66,7 @@ public class Command_fr extends TFM_Command
                     return true;
                 }
 
-                final TFM_PlayerData playerdata = TFM_PlayerData.getPlayerData(player);
+                TFM_PlayerData playerdata = TFM_PlayerData.getPlayerData(player);
                 playerdata.setFrozen(!playerdata.isFrozen());
 
                 playerMsg(player.getName() + " has been " + (playerdata.isFrozen() ? "frozen" : "unfrozen") + ".");
@@ -70,14 +75,5 @@ public class Command_fr extends TFM_Command
         }
 
         return true;
-    }
-
-    public static void setAllFrozen(boolean freeze)
-    {
-        allFrozen = freeze;
-        for (TFM_PlayerData data : TFM_PlayerData.PLAYER_DATA.values())
-        {
-            data.setFrozen(freeze);
-        }
     }
 }

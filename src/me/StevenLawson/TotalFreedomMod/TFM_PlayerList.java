@@ -1,13 +1,13 @@
 package me.StevenLawson.TotalFreedomMod;
 
-import com.google.common.collect.Sets;
 import java.io.File;
 import java.util.Collections;
+import me.StevenLawson.TotalFreedomMod.Config.TFM_Config;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
-import me.StevenLawson.TotalFreedomMod.Config.TFM_Config;
+import net.minecraft.util.com.google.common.collect.Sets;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -129,11 +129,12 @@ public class TFM_PlayerList
     {
         if (entry.getUniqueId().equals(newUuid))
         {
-            TFM_Log.warning("Not setting new UUID: UUIDs match!");
-            return;
+            throw new IllegalArgumentException("Cannot set new UUID: UUIDs match");
         }
 
-        // Add new entry
+        final boolean reAdd = PLAYER_LIST.containsKey(entry.getUniqueId());
+        PLAYER_LIST.remove(entry.getUniqueId());
+
         final TFM_Player newEntry = new TFM_Player(
                 newUuid,
                 entry.getFirstLoginName(),
@@ -141,13 +142,15 @@ public class TFM_PlayerList
                 entry.getFirstLoginUnix(),
                 entry.getLastLoginUnix(),
                 entry.getIps());
-        newEntry.save();
-        PLAYER_LIST.put(newUuid, newEntry);
 
-        // Remove old entry
-        PLAYER_LIST.remove(entry.getUniqueId());
-        final File oldFile = getConfigFile(entry.getUniqueId());
-        if (oldFile.exists() && !oldFile.delete())
+        if (reAdd)
+        {
+            PLAYER_LIST.put(newUuid, newEntry);
+        }
+
+        newEntry.save();
+
+        if (!getConfigFile(entry.getUniqueId()).delete())
         {
             TFM_Log.warning("Could not delete config: " + getConfigFile(entry.getUniqueId()).getName());
         }

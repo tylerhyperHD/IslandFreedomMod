@@ -2,8 +2,10 @@ package me.StevenLawson.TotalFreedomMod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 import me.StevenLawson.TotalFreedomMod.Bridge.TFM_EssentialsBridge;
 import me.StevenLawson.TotalFreedomMod.Config.TFM_ConfigEntry;
@@ -21,55 +23,8 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class TFM_PlayerData
 {
-    public static final Map<String, TFM_PlayerData> PLAYER_DATA = new HashMap<String, TFM_PlayerData>(); // ip,data
+    public static final Map<Player, TFM_PlayerData> USER_INFO = new HashMap<Player, TFM_PlayerData>();
     public static final long AUTO_PURGE = 20L * 60L * 5L;
-
-    public static boolean hasPlayerData(Player player)
-    {
-        return PLAYER_DATA.containsKey(TFM_Util.getIp(player));
-    }
-
-    public static TFM_PlayerData getPlayerDataSync(Player player)
-    {
-        synchronized (PLAYER_DATA)
-        {
-            return getPlayerData(player);
-        }
-    }
-
-    public static TFM_PlayerData getPlayerData(Player player)
-    {
-        final String ip = TFM_Util.getIp(player);
-
-        TFM_PlayerData data = TFM_PlayerData.PLAYER_DATA.get(ip);
-
-        if (data != null)
-        {
-            return data;
-        }
-
-        if (Bukkit.getOnlineMode())
-        {
-            for (TFM_PlayerData dataTest : PLAYER_DATA.values())
-            {
-                if (dataTest.player.getName().equalsIgnoreCase(player.getName()))
-                {
-                    data = dataTest;
-                    break;
-                }
-            }
-        }
-
-        if (data != null)
-        {
-            return data;
-        }
-
-        data = new TFM_PlayerData(player, TFM_UuidManager.getUniqueId(player), ip);
-        TFM_PlayerData.PLAYER_DATA.put(ip, data);
-
-        return data;
-    }
     //
     private final Player player;
     private final String ip;
@@ -77,7 +32,6 @@ public class TFM_PlayerData
     //
     private BukkitTask unmuteTask;
     private BukkitTask unfreezeTask;
-    private Location freezeLocation;
     private boolean isHalted = false;
     private int messageCount = 0;
     private int totalBlockDestroy = 0;
@@ -108,11 +62,55 @@ public class TFM_PlayerData
     private String tag = null;
     private int warningCount = 0;
 
-    private TFM_PlayerData(Player player, UUID uuid, String ip)
+    private TFM_PlayerData(Player player)
     {
         this.player = player;
-        this.uuid = uuid;
-        this.ip = ip;
+        this.uuid = TFM_UuidManager.getUniqueId(player.getName());
+        this.ip = player.getAddress().getAddress().getHostAddress();
+    }
+
+    public static TFM_PlayerData getPlayerData(Player player)
+    {
+        TFM_PlayerData playerdata = TFM_PlayerData.USER_INFO.get(player);
+
+        if (playerdata != null)
+        {
+            return playerdata;
+        }
+
+        Iterator<Entry<Player, TFM_PlayerData>> it = USER_INFO.entrySet().iterator();
+        while (it.hasNext())
+        {
+            Entry<Player, TFM_PlayerData> pair = it.next();
+            TFM_PlayerData playerdataTest = pair.getValue();
+
+            if (playerdataTest.player.getName().equalsIgnoreCase(player.getName()))
+            {
+                if (Bukkit.getOnlineMode())
+                {
+                    playerdata = playerdataTest;
+                    break;
+                }
+                else
+                {
+                    if (playerdataTest.ip.equalsIgnoreCase(player.getAddress().getAddress().getHostAddress()))
+                    {
+                        playerdata = playerdataTest;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (playerdata != null)
+        {
+            return playerdata;
+        }
+
+        playerdata = new TFM_PlayerData(player);
+        TFM_PlayerData.USER_INFO.put(player, playerdata);
+
+        return playerdata;
     }
 
     public String getIpAddress()
@@ -127,7 +125,7 @@ public class TFM_PlayerData
 
     public boolean isOrbiting()
     {
-        return isOrbiting;
+        return this.isOrbiting;
     }
 
     public void startOrbiting(double strength)
@@ -143,7 +141,7 @@ public class TFM_PlayerData
 
     public double orbitStrength()
     {
-        return orbitStrength;
+        return this.orbitStrength;
     }
 
     public void setCaged(boolean state)
@@ -161,7 +159,12 @@ public class TFM_PlayerData
 
     public boolean isCaged()
     {
-        return isCaged;
+        return this.isCaged;
+    }
+
+    public enum CageLayer
+    {
+        INNER, OUTER
     }
 
     public Material getCageMaterial(CageLayer layer)
@@ -179,17 +182,17 @@ public class TFM_PlayerData
 
     public Location getCagePos()
     {
-        return cagePosition;
+        return this.cagePosition;
     }
 
     public void clearHistory()
     {
-        cageHistory.clear();
+        this.cageHistory.clear();
     }
 
     public void insertHistoryBlock(Location location, Material material)
     {
-        cageHistory.add(new TFM_BlockData(location, material));
+        this.cageHistory.add(new TFM_BlockData(location, material));
     }
 
     public void regenerateHistory()
@@ -200,9 +203,16 @@ public class TFM_PlayerData
         }
     }
 
-    public Location getFreezeLocation()
+    private class TFM_BlockData
     {
-        return freezeLocation;
+        public Material material;
+        public Location location;
+
+        private TFM_BlockData(Location location, Material material)
+        {
+            this.location = location;
+            this.material = material;
+        }
     }
 
     public boolean isFrozen()
@@ -210,27 +220,19 @@ public class TFM_PlayerData
         return unfreezeTask != null;
     }
 
-    public void setFrozen(boolean freeze)
+    public void setFrozen(boolean fr)
     {
         cancel(unfreezeTask);
         unfreezeTask = null;
-        freezeLocation = null;
 
-        if (player.getGameMode() != GameMode.CREATIVE)
-        {
-            player.setFlying(false);
-        }
-
-        if (!freeze)
+        if (!fr)
         {
             return;
         }
 
-        freezeLocation = player.getLocation(); // Blockify location
-        player.setFlying(true); // Avoid infinite falling
-
         unfreezeTask = new BukkitRunnable()
         {
+
             @Override
             public void run()
             {
@@ -348,6 +350,23 @@ public class TFM_PlayerData
         this.mp44Firing = false;
     }
 
+    private class ArrowShooter extends BukkitRunnable
+    {
+        private Player player;
+
+        private ArrowShooter(Player player)
+        {
+            this.player = player;
+        }
+
+        @Override
+        public void run()
+        {
+            Arrow shot = player.launchProjectile(Arrow.class);
+            shot.setVelocity(shot.getVelocity().multiply(2.0));
+        }
+    }
+
     public void armMP44()
     {
         this.mp44Armed = true;
@@ -388,12 +407,14 @@ public class TFM_PlayerData
 
         unmuteTask = new BukkitRunnable()
         {
+
             @Override
             public void run()
             {
                 TFM_Util.adminAction("TotalFreedom", "Unmuting " + player.getName(), false);
                 setMuted(false);
             }
+
         }.runTaskLater(TotalFreedomMod.plugin, AUTO_PURGE);
     }
 
@@ -553,40 +574,6 @@ public class TFM_PlayerData
         }
         catch (Exception ex)
         {
-        }
-    }
-
-    public enum CageLayer
-    {
-        INNER, OUTER
-    }
-
-    private class TFM_BlockData
-    {
-        public Material material;
-        public Location location;
-
-        private TFM_BlockData(Location location, Material material)
-        {
-            this.location = location;
-            this.material = material;
-        }
-    }
-
-    private class ArrowShooter extends BukkitRunnable
-    {
-        private Player player;
-
-        private ArrowShooter(Player player)
-        {
-            this.player = player;
-        }
-
-        @Override
-        public void run()
-        {
-            Arrow shot = player.launchProjectile(Arrow.class);
-            shot.setVelocity(shot.getVelocity().multiply(2.0));
         }
     }
 }

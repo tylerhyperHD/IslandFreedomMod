@@ -13,6 +13,8 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -32,8 +34,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import me.StevenLawson.TotalFreedomMod.Config.TFM_Config;
 import me.StevenLawson.TotalFreedomMod.Config.TFM_ConfigEntry;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
+import net.minecraft.util.org.apache.commons.io.FileUtils;
+import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -67,9 +69,7 @@ public class TFM_Util
     private static final Map<String, Integer> ejectTracker = new HashMap<String, Integer>();
     public static final Map<String, EntityType> mobtypes = new HashMap<String, EntityType>();
     // See https://github.com/TotalFreedom/License - None of the listed names may be removed.
-    public static final List<String> DEVELOPERS = Arrays.asList("Madgeek1450", "Prozza", "DarthSalmon", "AcidicCyanide", "Wild1145", "WickedGamingUK");
-    public static final List<String> IFM_DEVELOPERS = Arrays.asList("Alex33856", "TylerHyperHd", "Scuph");
-    public static final List<String> IFM_SYS = Arrays.asList("SysAdmin", "NOSYS", "NAPE");
+    public static final List<String> DEVELOPERS = Arrays.asList("Madgeek1450", "DarthSalamon", "AcidicCyanide", "wild1145", "WickedGamingUK");
     private static final Random RANDOM = new Random();
     public static String DATE_STORAGE_FORMAT = "EEE, d MMM yyyy HH:mm:ss Z";
     public static final Map<String, ChatColor> CHAT_COLOR_NAMES = new HashMap<String, ChatColor>();
@@ -144,11 +144,6 @@ public class TFM_Util
         TFM_Util.playerMsg(sender, message, ChatColor.GRAY);
     }
 
-    public static void setFlying(Player player, boolean flying) {
-        player.setAllowFlight(true);
-        player.setFlying(flying);
-    }
-
     public static void adminAction(String adminName, String action, boolean isRed)
     {
         TFM_Util.bcastMsg(adminName + " - " + action, (isRed ? ChatColor.RED : ChatColor.AQUA));
@@ -161,22 +156,16 @@ public class TFM_Util
             return player.getPlayer().getAddress().getAddress().getHostAddress().trim();
         }
 
-        final TFM_Player entry = TFM_PlayerList.getEntry(TFM_UuidManager.getUniqueId(player));
+        final UUID uuid = TFM_UuidManager.getUniqueId(player);
 
-        return (entry == null ? null : entry.getIps().get(0));
-    }
+        final TFM_Player entry = TFM_PlayerList.getEntry(uuid);
 
-    public static boolean isUniqueId(String uuid)
-    {
-        try
+        if (entry == null)
         {
-            UUID.fromString(uuid);
-            return true;
+            return null;
         }
-        catch (IllegalArgumentException ex)
-        {
-            return false;
-        }
+
+        return entry.getIps().get(0);
     }
 
     public static String formatLocation(Location location)
@@ -333,7 +322,7 @@ public class TFM_Util
                         block.setType(Material.SKULL);
                         final Skull skull = (Skull) block.getState();
                         skull.setSkullType(SkullType.PLAYER);
-                        skull.setOwner("Prozza");
+                        skull.setOwner("DarthSalamon");
                         skull.update();
                     }
                 }

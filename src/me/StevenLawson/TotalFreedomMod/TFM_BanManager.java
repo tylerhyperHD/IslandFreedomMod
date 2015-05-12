@@ -8,7 +8,8 @@ import java.util.UUID;
 import me.StevenLawson.TotalFreedomMod.Config.TFM_Config;
 import me.StevenLawson.TotalFreedomMod.Config.TFM_ConfigEntry;
 import me.StevenLawson.TotalFreedomMod.TFM_Ban.BanType;
-import me.StevenLawson.TotalFreedomMod.TFM_UuidManager.TFM_UuidResolver;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class TFM_BanManager
@@ -110,7 +111,7 @@ public class TFM_BanManager
 
     public static List<TFM_Ban> getIpBanList()
     {
-        return Collections.unmodifiableList(ipBans);
+        return Collections.unmodifiableList(uuidBans);
     }
 
     public static List<TFM_Ban> getUuidBanList()

@@ -5,12 +5,11 @@ import java.util.List;
 import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
 import me.StevenLawson.TotalFreedomMod.TFM_Ban;
 import me.StevenLawson.TotalFreedomMod.TFM_BanManager;
-import me.StevenLawson.TotalFreedomMod.Config.TFM_ConfigEntry;
 import me.StevenLawson.TotalFreedomMod.TFM_Player;
 import me.StevenLawson.TotalFreedomMod.TFM_PlayerList;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
 import me.StevenLawson.TotalFreedomMod.TFM_UuidManager;
-import org.apache.commons.lang3.StringUtils;
+import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -83,7 +82,7 @@ public class Command_glist extends TFM_Command
                 if (target != null)
                 {
                     TFM_BanManager.addUuidBan(new TFM_Ban(TFM_UuidManager.getUniqueId(target), target.getName()));
-                    target.kickPlayer("You have been banned by " + sender.getName() + "\n If you think you have been banned wrongly, appeal here: " + TFM_ConfigEntry.SERVER_BAN_URL.getString());
+                    target.kickPlayer("You have been banned by " + sender.getName() + "\n If you think you have been banned wrongly, appeal here: http://www.totalfreedom.boards.net");
                 }
                 else
                 {

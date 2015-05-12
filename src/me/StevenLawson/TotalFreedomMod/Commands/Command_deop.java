@@ -1,6 +1,5 @@
 package me.StevenLawson.TotalFreedomMod.Commands;
 
-import me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -32,7 +31,7 @@ public class Command_deop extends TFM_Command
         // if the player is not online
         if (player == null)
         {
-            player = TFM_DepreciationAggregator.getOfflinePlayer(server, args[0]);
+            player = me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator.getOfflinePlayer(server, args[0]);
         }
 
         TFM_Util.adminAction(sender.getName(), "De-opping " + player.getName(), false);

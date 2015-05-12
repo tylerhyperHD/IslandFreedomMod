@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
-import static me.StevenLawson.TotalFreedomMod.HTTPD.HTMLGenerationTools.list;
-import static me.StevenLawson.TotalFreedomMod.HTTPD.HTMLGenerationTools.paragraph;
+import net.minecraft.util.org.apache.commons.lang3.StringUtils;
+import net.minecraft.util.org.apache.commons.io.FileUtils;
 import me.StevenLawson.TotalFreedomMod.TFM_Log;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
+
+import static me.StevenLawson.TotalFreedomMod.HTTPD.HTMLGenerationTools.*;
 
 public class Module_dump extends TFM_HTTPD_Module
 {

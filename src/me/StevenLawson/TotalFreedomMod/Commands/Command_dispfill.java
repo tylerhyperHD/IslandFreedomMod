@@ -2,9 +2,8 @@ package me.StevenLawson.TotalFreedomMod.Commands;
 
 import java.util.ArrayList;
 import java.util.List;
-import me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
-import org.apache.commons.lang3.StringUtils;
+import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -46,7 +45,7 @@ public class Command_dispfill extends TFM_Command
                 {
                     try
                     {
-                        material = TFM_DepreciationAggregator.getMaterial(Integer.parseInt(searchItem));
+                        material = me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator.getMaterial(Integer.parseInt(searchItem));
                     }
                     catch (NumberFormatException ex)
                     {

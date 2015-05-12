@@ -3,8 +3,7 @@ package me.StevenLawson.TotalFreedomMod.Commands;
 import java.util.ArrayList;
 import java.util.List;
 import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
-import me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator;
-import org.apache.commons.lang3.StringUtils;
+import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -31,7 +30,7 @@ public class Command_whohas extends TFM_Command
         {
             try
             {
-                material = TFM_DepreciationAggregator.getMaterial(Integer.parseInt(materialName));
+                material = me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator.getMaterial(Integer.parseInt(materialName));
             }
             catch (NumberFormatException ex)
             {

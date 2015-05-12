@@ -2,6 +2,7 @@ package me.StevenLawson.TotalFreedomMod.Commands;
 
 import me.StevenLawson.TotalFreedomMod.TFM_PlayerData;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
+import me.StevenLawson.TotalFreedomMod.TotalFreedomMod;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -69,7 +70,7 @@ public class Command_purgeall extends TFM_Command
         }
 
         // Unfreeze all players
-        Command_fr.setAllFrozen(false);
+        TotalFreedomMod.allPlayersFrozen = false;
 
         // Remove all mobs
         Command_mp.purgeMobs();

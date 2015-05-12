@@ -5,9 +5,8 @@ import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
 import me.StevenLawson.TotalFreedomMod.Config.TFM_ConfigEntry;
-import net.minecraft.server.v1_8_R2.EntityPlayer;
-import net.minecraft.server.v1_8_R2.MinecraftServer;
-import net.minecraft.server.v1_8_R2.PropertyManager;
+import net.minecraft.server.v1_7_R4.MinecraftServer;
+import net.minecraft.server.v1_7_R4.PropertyManager;
 import org.bukkit.ChatColor;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
@@ -16,7 +15,7 @@ import org.bukkit.event.player.PlayerLoginEvent.Result;
 
 public class TFM_ServerInterface
 {
-    public static final String COMPILE_NMS_VERSION = "v1_8_R2";
+    public static final String COMPILE_NMS_VERSION = "v1_7_R4";
     public static final Pattern USERNAME_REGEX = Pattern.compile("^[\\w\\d_]{3,20}$");
 
     public static void setOnlineMode(boolean mode)
@@ -30,9 +29,9 @@ public class TFM_ServerInterface
     {
         String[] whitelisted = MinecraftServer.getServer().getPlayerList().getWhitelisted();
         int size = whitelisted.length;
-        for (EntityPlayer player : MinecraftServer.getServer().getPlayerList().players)
+        for (String player : MinecraftServer.getServer().getPlayerList().getWhitelist().getEntries())
         {
-            MinecraftServer.getServer().getPlayerList().getWhitelist().remove(player.getProfile());
+            MinecraftServer.getServer().getPlayerList().getWhitelist().remove(player);
         }
 
         try
@@ -49,7 +48,7 @@ public class TFM_ServerInterface
 
     public static boolean isWhitelisted()
     {
-        return MinecraftServer.getServer().getPlayerList().getHasWhitelist();
+        return MinecraftServer.getServer().getPlayerList().hasWhitelist;
     }
 
     public static List<?> getWhitelisted()
@@ -67,11 +66,11 @@ public class TFM_ServerInterface
         final Server server = TotalFreedomMod.server;
         final Player player = event.getPlayer();
         final String username = player.getName();
+        final UUID uuid = TFM_UuidManager.getUniqueId(username);
         final String ip = event.getAddress().getHostAddress().trim();
-        final UUID uuid = TFM_UuidManager.newPlayer(player, ip);
 
         // Perform username checks
-        if (username.length() < 3 || username.length() > TotalFreedomMod.MAX_USERNAME_LENGTH)
+        if (username.length() < 3 || username.length() > 20)
         {
             event.disallow(Result.KICK_OTHER, "Your username is an invalid length (must be between 3 and 20 characters long).");
             return;
@@ -84,16 +83,24 @@ public class TFM_ServerInterface
         }
 
         // Check if player is admin
-        // Not safe to use TFM_Util.isSuperAdmin(player) because player.getAddress() will return a null until after player login.
-        final boolean isAdmin = TFM_AdminList.isSuperAdminSafe(uuid, ip);
+        // Not safe to use TFM_Util.isSuperAdmin for player logging in because player.getAddress() will return a null until after player login.
+        final boolean isAdmin;
+        if (server.getOnlineMode())
+        {
+            isAdmin = TFM_AdminList.getSuperUUIDs().contains(uuid);
+        }
+        else
+        {
+            final TFM_Admin admin = TFM_AdminList.getEntryByIp(ip);
+            isAdmin = admin != null && admin.isActivated();
+        }
 
         // Validation below this point
         if (isAdmin) // Player is superadmin
         {
-            // Force-allow log in
+            // force-allow log in
             event.allow();
 
-            // Kick players with the same name
             for (Player onlinePlayer : server.getOnlinePlayers())
             {
                 if (onlinePlayer.getName().equalsIgnoreCase(username))
@@ -102,7 +109,7 @@ public class TFM_ServerInterface
                 }
             }
 
-            int count = server.getOnlinePlayers().size();
+            int count = server.getOnlinePlayers().length;
             if (count >= server.getMaxPlayers())
             {
                 for (Player onlinePlayer : server.getOnlinePlayers())
@@ -125,13 +132,12 @@ public class TFM_ServerInterface
                 event.disallow(Result.KICK_OTHER, "The server is full and a player could not be kicked, sorry!");
                 return;
             }
-
             return;
         }
 
         // Player is not an admin
         // Server full check
-        if (server.getOnlinePlayers().size() >= server.getMaxPlayers())
+        if (server.getOnlinePlayers().length >= server.getMaxPlayers())
         {
             event.disallow(Result.KICK_FULL, "Sorry, but this server is full.");
             return;

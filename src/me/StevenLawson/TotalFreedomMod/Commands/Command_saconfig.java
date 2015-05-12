@@ -7,7 +7,7 @@ import me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator;
 import me.StevenLawson.TotalFreedomMod.TFM_PlayerData;
 import me.StevenLawson.TotalFreedomMod.TFM_TwitterHandler;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
-import org.apache.commons.lang3.StringUtils;
+import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -165,7 +165,7 @@ public class Command_saconfig extends TFM_Command
                     targetName = player.getName();
                 }
 
-                if (!TFM_AdminList.getLowercaseSuperNames().contains(targetName.toLowerCase()))
+                if (!TFM_AdminList.getLowerSuperNames().contains(targetName.toLowerCase()))
                 {
                     playerMsg("Superadmin not found: " + targetName);
                     return true;

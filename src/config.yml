@@ -1,7 +1,5 @@
-#
 # TotalFreedomMod v4.3 Configuration
-# by Madgeek1450 and Prozza
-#
+# by Madgeek1450 and DarthSalamon
 
 # Generic server information
 server:
@@ -94,7 +92,6 @@ blocked_commands:
   - 'n:b:/toggledownfall:_'
   - 'n:b:/effect:Please use /potion to set effects.'
   - 'n:b:/enderchest:_'
-  - 'n:b:/spreadplayers:_'
 
   # Superadmin commands
   - 's:b:/kick:_'
@@ -115,24 +112,18 @@ blocked_commands:
   - 's:b:/tellraw:_'
   - 's:b:/forestgen:_'
   - 's:b:/setidletimeout:_'
-  - 's:b:/mail sendall:_'
-  - 's:b:/eco reset:_'
-  - 's:b:/mask:_'
-  - 's:b:/gmask:_'
-  - 's:b:/tool:_'
-  - 's:b:/lrbuild:_'
-  - 's:b:/defaultgamemode:_'
-  - 's:b:/reload:_'
 
   # Superadmin commands - Auto-eject
-  - 's:a:/stop:_'
-  - 's:a:/save-all:_'
-  - 's:a:/save-on:_'
-  - 's:a:/save-off:_'
-  - 's:a:/clearhistory:_'
+  - 's:a:/stop'
+  - 's:a:/reload'
+  - 's:a:/save-all'
+  - 's:a:/save-on'
+  - 's:a:/save-off'
+  - 's:a:/clearhistory'
+  - 's:a:/mat'
 
     # Spigot commands
-  - 's:a:/restart:_'
+  - 's:a:/restart'
   - 's:b:/setblock:_'
 
 # Automatically wipe dropped objects
@@ -211,27 +202,7 @@ announcer:
   announcements:
     - 'Be sure to visit our forums at &6http://totalfreedom.boards.net/'
     - 'You can always review the server rules here: &6http://totalfreedom.me/'
-    - 'If you are not OP, be sure to ask!'
-    - 'Somebody breaking the rules?  Report it!  /report <user> <reason>'
-    - 'Griefing is not allowed!'
-    - 'Hacking is allowed!'
-    - 'Interested in becoming admin? Do "/ai" for more information!'
-    - 'You may view all online administrators via "/list -a"'
-    - 'Save your buildings via WorldEdit!  http://totalfreedom.me for more information!'
-    - 'Famous players, such as Notch, are always fake!  We are an offline/cracked server!'
-    - 'You may contact TotalFreedoms Support on Twitter!  pravi.us/nGS'
-    - 'You may download TotalFreedomMod here: pravi.us/V8c'
-    - 'MarkByron is TotalFreedoms owner.'
-    - 'Server lagging?  Check the lag via "/tps"'
-    - 'You are allowed to record and stream videos on TotalFreedom :D'
-    - 'An admin abusing?  Report it! pravi.us/vfa'
-    - 'Player vs Player while in creative/god mode it forbidden!'
-    - 'Spawn killing is forbidden!'
-    - 'Invisible potions are allowed!'
-    - 'Serial griefing and trolling will result in permanently being banned!'
-    - 'TotalFreedom does not accept any form of donations!'
-    - 'Racism, Nazism, and Sexism is strictly forbidden!'
-    - 'Join our Mumble server! IP: 64.34.202.140:2862'
+    - 'If you aren''t OP, be sure to ask!'
 
 # Players who cannot be banned by username
 unbannable_usernames:
@@ -275,7 +246,7 @@ unbannable_usernames:
 
 # IPs that can not be supered
 noadmin_ips:
-  - 167.114.97.16
+  - 127.0.0.1
 
 # TwitterBot - Used to allow superadmins to verify themselves using twitter
 twitterbot:

@@ -2,7 +2,6 @@ package me.StevenLawson.TotalFreedomMod.Commands;
 
 import me.StevenLawson.TotalFreedomMod.Bridge.TFM_EssentialsBridge;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -40,7 +39,8 @@ public class Command_nicknyan extends TFM_Command
             return true;
         }
 
-        for (Player player : Bukkit.getOnlinePlayers())
+        final Player[] onlinePlayers = server.getOnlinePlayers();
+        for (final Player player : onlinePlayers)
         {
             if (player == sender_p)
             {

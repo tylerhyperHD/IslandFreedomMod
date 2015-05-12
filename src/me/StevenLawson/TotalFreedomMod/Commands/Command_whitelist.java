@@ -1,8 +1,7 @@
 package me.StevenLawson.TotalFreedomMod.Commands;
 
-import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
-import me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator;
 import me.StevenLawson.TotalFreedomMod.TFM_ServerInterface;
+import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -92,7 +91,7 @@ public class Command_whitelist extends TFM_Command
 
             if (player == null)
             {
-                player = TFM_DepreciationAggregator.getOfflinePlayer(server, search_name);
+                player = me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator.getOfflinePlayer(server, search_name);
             }
 
             TFM_Util.adminAction(sender.getName(), "Adding " + player.getName() + " to the whitelist.", false);
@@ -114,7 +113,7 @@ public class Command_whitelist extends TFM_Command
 
             if (player == null)
             {
-                player = TFM_DepreciationAggregator.getOfflinePlayer(server, search_name);
+                player = me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator.getOfflinePlayer(server, search_name);
             }
 
             if (player.isWhitelisted())
