@@ -52,7 +52,7 @@ public class TFM_ServerListener implements Listener
         
         if (TFM_ConfigEntry.ENABLE_CHAOS.getBoolean())
         {
-            event.setMotd(ChatColor.RED + "Server is currently in chaos mode, prepare for some crazy shit!");
+            event.setMotd(ChatColor.RED + "Server is currently in chaos mode, prepare for some crazy s**t!");
             return;
         }
         
