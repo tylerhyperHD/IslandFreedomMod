@@ -27,19 +27,19 @@ public class TFM_ServerListener implements Listener
 
         if (TFM_ConfigEntry.ADMIN_ONLY_MODE.getBoolean())
         {
-            event.setMotd(ChatColor.RED + "Server is closed.");
+            event.setMotd(ChatColor.RED + "Server is in admin only mode.");
             return;
         }
 
         if (Bukkit.hasWhitelist())
         {
-            event.setMotd(ChatColor.RED + "Whitelist enabled.");
+            event.setMotd(ChatColor.RED + "Whitelist is enabled.");
             return;
         }
 
         if (Bukkit.getOnlinePlayers().length >= Bukkit.getMaxPlayers())
         {
-            event.setMotd(ChatColor.RED + "Server is full.");
+            event.setMotd(ChatColor.RED + "The server is full!");
             return;
         }
 
@@ -58,7 +58,7 @@ public class TFM_ServerListener implements Listener
         
         // Colorful MOTD
 
-        String message = String.format("Welcome to IslandFreedom%s! - Fun, Free and Easy! Running on Spigot for Minecraft 1.7.10!", TFM_Util.getPlayerFromIp(ip));
+        String message = String.format("Welcome to IslandFreedom ", TFM_Util.getPlayerFromIp(ip)), " running on Spigot 1.8";
 
         final StringBuilder motd = new StringBuilder();
 
