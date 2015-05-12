@@ -13,8 +13,6 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -932,6 +930,18 @@ public class TFM_Util
     // Start FOPM Changes //
     
     
+    public static void spawnMob(Player player, EntityType entity, int amount)
+    {
+        int i = 0;
+        do
+        {
+            player.getWorld().spawnEntity(player.getLocation(), entity);
+            i++;
+        }
+        while (i <= amount);
+    }
+        
+        
     public static String getPlayerFromIp(String ip)
     {
         for (TFM_Player player : TFM_PlayerList.getAllPlayers())
