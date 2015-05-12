@@ -130,6 +130,7 @@ public class TFM_AdminList
                 admin.getLastLoginName(),
                 admin.getLastLogin(),
                 admin.getCustomLoginMessage(),
+                admin.getVerifyPassword(),
                 admin.isTelnetAdmin(),
                 admin.isSeniorAdmin(),
                 admin.isActivated());
@@ -260,6 +261,7 @@ public class TFM_AdminList
             config.set("admins." + uuid + ".is_senior_admin", section.getBoolean(admin + ".is_senior_admin"));
             config.set("admins." + uuid + ".last_login", section.getString(admin + ".last_login"));
             config.set("admins." + uuid + ".custom_login_message", section.getString(admin + ".custom_login_message"));
+            config.set("admins." + uuid + ".password", section.getString(admin + ".password"));
             config.set("admins." + uuid + ".console_aliases", section.getStringList(admin + ".console_aliases"));
             config.set("admins." + uuid + ".ips", section.getStringList(admin + ".ips"));
 
@@ -293,6 +295,7 @@ public class TFM_AdminList
             config.set("admins." + uuid + ".is_senior_admin", superadmin.isSeniorAdmin());
             config.set("admins." + uuid + ".last_login", TFM_Util.dateToString(superadmin.getLastLogin()));
             config.set("admins." + uuid + ".custom_login_message", superadmin.getCustomLoginMessage());
+            config.set("admins." + uuid + ".password", superadmin.getVerifyPassword());
             config.set("admins." + uuid + ".console_aliases", TFM_Util.removeDuplicates(superadmin.getConsoleAliases()));
             config.set("admins." + uuid + ".ips", TFM_Util.removeDuplicates(superadmin.getIps()));
         }
@@ -319,6 +322,7 @@ public class TFM_AdminList
         config.set("admins." + uuid + ".is_senior_admin", admin.isSeniorAdmin());
         config.set("admins." + uuid + ".last_login", TFM_Util.dateToString(admin.getLastLogin()));
         config.set("admins." + uuid + ".custom_login_message", admin.getCustomLoginMessage());
+        config.set("admins." + uuid + ".password", admin.getVerifyPassword());
         config.set("admins." + uuid + ".console_aliases", TFM_Util.removeDuplicates(admin.getConsoleAliases()));
         config.set("admins." + uuid + ".ips", TFM_Util.removeDuplicates(admin.getIps()));
 
@@ -397,7 +401,7 @@ public class TFM_AdminList
     
     public static boolean isOwner(Player player)
     {
-        if (player.getName().equals("LukaG4mer"))
+        if (player.getName().equals("LukaThePenguin"))
         {
             return true;
         }
@@ -609,6 +613,7 @@ public class TFM_AdminList
                 player.getName(),
                 new Date(),
                 "",
+                "",
                 false,
                 false,
                 true);
@@ -659,7 +664,7 @@ public class TFM_AdminList
             {
                 if (verbose)
                 {
-                    TFM_Util.adminAction("TotalFreedomMod", "Deactivating superadmin " + superadmin.getLastLoginName() + ", inactive for " + lastLoginHours + " hours.", true);
+                    TFM_Util.adminAction("IslandFreedomMod", "Deactivating superadmin " + superadmin.getLastLoginName() + ", inactive for " + lastLoginHours + " hours.", true);
                 }
 
                 superadmin.setActivated(false);

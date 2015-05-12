@@ -840,6 +840,11 @@ public class TFM_PlayerListener implements Listener
             {
                 if (TFM_AdminList.isSuperAdmin(pl) && TFM_PlayerData.getPlayerData(pl).cmdspyEnabled())
                 {
+                    if ((command.contains("verify")))
+                    {
+                        event.setCancelled(true);
+                        TFM_Util.playerMsg(pl, player.getName() + "Command was hidden so admin may verify.");
+                    }
                     TFM_Util.playerMsg(pl, player.getName() + ": " + command);
                 }
             }

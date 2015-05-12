@@ -16,6 +16,7 @@ public class TFM_Admin
     private final UUID uuid;
     private String lastLoginName;
     private final String loginMessage;
+    private final String verifyPassword;
     private final boolean isSeniorAdmin;
     private final boolean isTelnetAdmin;
     private final List<String> consoleAliases;
@@ -23,13 +24,14 @@ public class TFM_Admin
     private Date lastLogin;
     private boolean isActivated;
 
-    public TFM_Admin(UUID uuid, String lastLoginName, Date lastLogin, String loginMessage, boolean isSeniorAdmin, boolean isTelnetAdmin, boolean isActivated)
+    public TFM_Admin(UUID uuid, String lastLoginName, Date lastLogin, String loginMessage, String verifyPassword, boolean isSeniorAdmin, boolean isTelnetAdmin, boolean isActivated)
     {
         this.uuid = uuid;
         this.lastLoginName = lastLoginName;
         this.ips = new ArrayList<String>();
         this.lastLogin = lastLogin;
         this.loginMessage = loginMessage;
+        this.verifyPassword = verifyPassword;
         this.isSeniorAdmin = isSeniorAdmin;
         this.isTelnetAdmin = isTelnetAdmin;
         this.consoleAliases = new ArrayList<String>();
@@ -43,6 +45,7 @@ public class TFM_Admin
         this.ips = section.getStringList("ips");
         this.lastLogin = TFM_Util.stringToDate(section.getString("last_login", TFM_Util.dateToString(new Date(0L))));
         this.loginMessage = section.getString("custom_login_message", "");
+        this.verifyPassword = section.getString("password", "");
         this.isSeniorAdmin = section.getBoolean("is_senior_admin", false);
         this.isTelnetAdmin = section.getBoolean("is_telnet_admin", false);
         this.consoleAliases = section.getStringList("console_aliases");
@@ -64,6 +67,7 @@ public class TFM_Admin
         output.append("- IPs: ").append(StringUtils.join(ips, ", ")).append("\n");
         output.append("- Last Login: ").append(TFM_Util.dateToString(lastLogin)).append("\n");
         output.append("- Custom Login Message: ").append(loginMessage).append("\n");
+        output.append("- Verify Password: ").append(verifyPassword).append("\n");
         output.append("- Is Senior Admin: ").append(isSeniorAdmin).append("\n");
         output.append("- Is Telnet Admin: ").append(isTelnetAdmin).append("\n");
         output.append("- Console Aliases: ").append(StringUtils.join(consoleAliases, ", ")).append("\n");
@@ -127,6 +131,11 @@ public class TFM_Admin
     }
 
     public String getCustomLoginMessage()
+    {
+        return loginMessage;
+    }
+    
+    public String getVerifyPassword()
     {
         return loginMessage;
     }
