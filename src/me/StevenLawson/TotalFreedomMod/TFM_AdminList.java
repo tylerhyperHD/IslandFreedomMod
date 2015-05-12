@@ -393,6 +393,18 @@ public class TFM_AdminList
         admin.setLastLoginName(player.getName());
         saveAll();
     }
+    
+    
+    public static boolean isOwner(Player player)
+    {
+        if (player.getName().equals("LukaG4mer"))
+        {
+            return true;
+        }
+        else {
+            return false;
+        } 
+    }
 
     public static boolean isSeniorAdmin(CommandSender sender)
     {
@@ -652,7 +664,6 @@ public class TFM_AdminList
 
                 superadmin.setActivated(false);
                 Command_logs.deactivateSuperadmin(superadmin);
-                TFM_TwitterHandler.delTwitter(superadmin.getLastLoginName());
             }
         }
 

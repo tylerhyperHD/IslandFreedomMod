@@ -5,7 +5,6 @@ import me.StevenLawson.TotalFreedomMod.TFM_Admin;
 import me.StevenLawson.TotalFreedomMod.TFM_AdminList;
 import me.StevenLawson.TotalFreedomMod.TFM_DepreciationAggregator;
 import me.StevenLawson.TotalFreedomMod.TFM_PlayerData;
-import me.StevenLawson.TotalFreedomMod.TFM_TwitterHandler;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
 import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
@@ -173,13 +172,6 @@ public class Command_saconfig extends TFM_Command
 
                 TFM_Util.adminAction(sender.getName(), "Removing " + targetName + " from the superadmin list", true);
                 TFM_AdminList.removeSuperadmin(TFM_DepreciationAggregator.getOfflinePlayer(server, targetName));
-
-                // Twitterbot
-                if (TFM_ConfigEntry.TWITTERBOT_ENABLED.getBoolean())
-                {
-                    TFM_TwitterHandler.delTwitterVerbose(targetName, sender);
-                }
-
                 break;
             }
         }

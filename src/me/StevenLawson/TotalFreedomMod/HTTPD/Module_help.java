@@ -12,6 +12,7 @@ import me.StevenLawson.TotalFreedomMod.Commands.TFM_CommandLoader;
 import me.StevenLawson.TotalFreedomMod.Commands.TFM_CommandLoader.TFM_DynamicCommand;
 import static me.StevenLawson.TotalFreedomMod.HTTPD.HTMLGenerationTools.heading;
 import static me.StevenLawson.TotalFreedomMod.HTTPD.HTMLGenerationTools.paragraph;
+import me.StevenLawson.TotalFreedomMod.TotalFreedomMod;
 import static net.minecraft.util.org.apache.commons.lang3.StringEscapeUtils.escapeHtml4;
 import net.minecraft.util.org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.Command;
@@ -95,7 +96,7 @@ public class Module_help extends TFM_HTTPD_Module
             AdminLevel lastTfmCommandLevel = null;
             for (Command command : commands)
             {
-                if ("TotalFreedomMod".equals(pluginName))
+                if (TotalFreedomMod.MOD_NAME.equals(pluginName))
                 {
                     AdminLevel tfmCommandLevel = ((TFM_DynamicCommand) command).getCommandInfo().getLevel();
                     if (lastTfmCommandLevel == null || lastTfmCommandLevel != tfmCommandLevel)
@@ -139,7 +140,7 @@ public class Module_help extends TFM_HTTPD_Module
     @Override
     public String getTitle()
     {
-        return "TotalFreedomMod :: Command Help";
+        return TotalFreedomMod.MOD_NAME + " :: Command Help";
     }
 
     @Override
@@ -147,9 +148,4 @@ public class Module_help extends TFM_HTTPD_Module
     {
         return ".commandName{font-weight:bold;}.commandDescription{padding-left:15px;}li{margin:.15em;padding:.15em;}";
     }
-//    @Override
-//    public String getScript()
-//    {
-//        return "$(document).ready(function(){console.log(\"Ready\");});";
-//    }
 }
