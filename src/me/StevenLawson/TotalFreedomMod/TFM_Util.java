@@ -68,6 +68,8 @@ public class TFM_Util
     public static final Map<String, EntityType> mobtypes = new HashMap<String, EntityType>();
     // See https://github.com/TotalFreedom/License - None of the listed names may be removed.
     public static final List<String> DEVELOPERS = Arrays.asList("Madgeek1450", "Prozza", "DarthSalmon", "AcidicCyanide", "Wild1145", "WickedGamingUK");
+    public static final List<String> IFM_DEVELOPERS = Arrays.asList("Alex33856", "TylerHyperHd", "Scuph");
+    public static final List<String> IFM_SYS = Arrays.asList("SysAdmin", "NOSYS", "NAPE");
     private static final Random RANDOM = new Random();
     public static String DATE_STORAGE_FORMAT = "EEE, d MMM yyyy HH:mm:ss Z";
     public static final Map<String, ChatColor> CHAT_COLOR_NAMES = new HashMap<String, ChatColor>();
@@ -140,6 +142,11 @@ public class TFM_Util
     public static void playerMsg(CommandSender sender, String message)
     {
         TFM_Util.playerMsg(sender, message, ChatColor.GRAY);
+    }
+
+    public static void setFlying(Player player, boolean flying) {
+        player.setAllowFlight(true);
+        player.setFlying(flying);
     }
 
     public static void adminAction(String adminName, String action, boolean isRed)
