@@ -37,15 +37,12 @@ public enum TFM_ConfigEntry
     SERVER_BAN_URL(String.class, "server.ban_url"),
     SERVER_PERMBAN_URL(String.class, "server.permban_url"),
     //
-    TWITTERBOT_ENABLED(Boolean.class, "twitterbot.enabled"),
-    TWITTERBOT_SECRET(String.class, "twitterbot.secret"),
-    TWITTERBOT_URL(String.class, "twitterbot.url"),
-    //
     DISABLE_NIGHT(Boolean.class, "disable.night"),
     DISABLE_WEATHER(Boolean.class, "disable.weather"),
     //
     ENABLE_PREPROCESS_LOG(Boolean.class, "preprocess_log"),
     ENABLE_PET_PROTECT(Boolean.class, "petprotect.enabled"),
+    ENABLE_ADMINWORLD(Boolean.class, "adminworld_enabled"),
     //
     LANDMINES_ENABLED(Boolean.class, "landmines_enabled"),
     TOSSMOB_ENABLED(Boolean.class, "tossmob_enabled"),

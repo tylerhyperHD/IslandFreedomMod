@@ -5,6 +5,7 @@ import me.StevenLawson.TotalFreedomMod.TFM_GameRuleHandler;
 import me.StevenLawson.TotalFreedomMod.TFM_GameRuleHandler.TFM_GameRule;
 import me.StevenLawson.TotalFreedomMod.TFM_Util;
 import me.StevenLawson.TotalFreedomMod.TotalFreedomMod;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,6 +33,8 @@ public class Command_toggle extends TFM_Command
             playerMsg("- droptoggle");
             playerMsg("- nonuke");
             playerMsg("- explosives");
+            playerMsg("- adminworld");
+            playerMsg("- chaos", ChatColor.DARK_RED);
             return false;
         }
 
@@ -94,6 +97,30 @@ public class Command_toggle extends TFM_Command
         if (args[0].equals("droptoggle"))
         {
             toggle("Automatic entity wiping is", TFM_ConfigEntry.AUTO_ENTITY_WIPE);
+            return true;
+        }
+        
+        if (args[0].equals("adminworld"))
+        {
+            if (!TFM_Util.isHighRank(sender) || sender.getName().equals("SupItsDillon"))
+            {
+                TFM_Util.playerMsg(sender, TotalFreedomMod.MSG_NO_PERMS, ChatColor.RED);
+                return true;
+            }
+            toggle("Adminworld is", TFM_ConfigEntry.ENABLE_ADMINWORLD);
+            return true;
+        }
+
+        if (args[0].equals("chaos"))
+        {
+            if (!TFM_Util.isHighRank(sender))
+            {
+                TFM_Util.playerMsg(sender, TotalFreedomMod.MSG_NO_PERMS, ChatColor.RED);
+                return true;
+            }
+            TFM_Util.adminAction(sender.getName(), "Toggling Chaos Mode!", false);
+            TFM_Util.bcastMsg(!TFM_ConfigEntry.ENABLE_CHAOS.getBoolean() ? "EEEK, HIDE THE FUCKING CHILDREN!!!!!" : "Everyone is safe... FOR NOW...", ChatColor.RED);
+            toggle("Chaos mode is", TFM_ConfigEntry.ENABLE_CHAOS);
             return true;
         }
 
