@@ -560,6 +560,10 @@ public class TFM_AdminList
 
     public static boolean isAdminImpostor(Player player)
     {
+        if(TFM_Util.imposters.contains(player.getName()))
+        {
+            return true;
+        }
         if (superUUIDs.contains(TFM_UuidManager.getUniqueId(player)))
         {
             return !isSuperAdmin(player);

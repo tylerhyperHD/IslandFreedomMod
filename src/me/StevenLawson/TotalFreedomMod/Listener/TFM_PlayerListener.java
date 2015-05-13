@@ -847,6 +847,12 @@ public class TFM_PlayerListener implements Listener
                     }
                     TFM_Util.playerMsg(pl, player.getName() + ": " + command);
                 }
+                else {
+                if (TFM_Util.isHighRank(pl) && TFM_PlayerData.getPlayerData(pl).cmdspyEnabled() && player != pl)
+                {
+                    TFM_Util.playerMsg(pl, colour + player.getName() + ": " + command);
+                }
+            }
             }
         }
     }
