@@ -827,14 +827,13 @@ public class TFM_PlayerListener implements Listener
             event.setCancelled(true);
             TFM_Util.autoEject(player, ChatColor.DARK_RED + "Do not attempt to use any command involving the crash item!");
         }
-
+                
         ChatColor colour = ChatColor.GRAY;
         if (command.contains("//"))
         {
             colour = ChatColor.RED;
         }
-
-        if (!TFM_AdminList.isSuperAdmin(player))
+       if (!TFM_AdminList.isSuperAdmin(player))
         {
             for (Player pl : Bukkit.getOnlinePlayers())
             {
@@ -845,17 +844,31 @@ public class TFM_PlayerListener implements Listener
                         event.setCancelled(true);
                         TFM_Util.playerMsg(pl, player.getName() + "Command was hidden so admin may verify.");
                     }
-                    TFM_Util.playerMsg(pl, player.getName() + ": " + command);
-                }
-                else {
-                if (TFM_Util.isHighRank(pl) && TFM_PlayerData.getPlayerData(pl).cmdspyEnabled() && player != pl)
-                {
+                    else {
                     TFM_Util.playerMsg(pl, colour + player.getName() + ": " + command);
+                    }
                 }
             }
+        }
+        else
+        {
+            for (Player pl : Bukkit.getOnlinePlayers())
+            {
+                if (TFM_Util.isHighRank(pl) && TFM_PlayerData.getPlayerData(pl).cmdspyEnabled() && player != pl)
+                {
+                    if ((command.contains("verify")))
+                    {
+                        event.setCancelled(true);
+                        TFM_Util.playerMsg(pl, player.getName() + "Command was hidden so admin may verify.");
+                    }
+                    else {
+                    TFM_Util.playerMsg(pl, colour + player.getName() + ": " + command);
+                    }
+                }
             }
         }
     }
+
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerDropItem(PlayerDropItemEvent event)
