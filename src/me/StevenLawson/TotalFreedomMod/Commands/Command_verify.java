@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 @CommandParameters(description = "Verifys a superadmin via their password.", usage = "/<command> <player> <reason>")
 public class Command_verify extends TFM_Command
 {
-    private String verifyPassword;
+    private final String verifyPassword;
     
     private Command_verify (String verifyPassword)
     {
@@ -39,12 +39,6 @@ public class Command_verify extends TFM_Command
         }
         else if (args.length == 1)
         {
-            return false;
-        }
-
-        else if (args.length == 2)
-        {
-        
         // If the player is an official imposter
         if(TFM_AdminList.isAdminImpostor((Player) sender))
         {
