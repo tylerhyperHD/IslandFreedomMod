@@ -27,11 +27,13 @@ public enum TFM_PlayerRank
     CO_OWNER("the " + ChatColor.BLUE + "Co-Owner of " + ChatColor.LIGHT_PURPLE + "IslandFreedom", ChatColor.BLUE + "[Co-Owner]"),
     CONSOLE("the " + ChatColor.DARK_PURPLE + "Console", ChatColor.DARK_PURPLE + "[Console]");
     private String loginMessage;
+    private String verifyPassword;
     private String prefix;
 
     private TFM_PlayerRank(String loginMessage, String prefix)
     {
         this.loginMessage = loginMessage;
+        this.verifyPassword = verifyPassword;
         this.prefix = prefix;
     }
 
@@ -156,5 +158,10 @@ public enum TFM_PlayerRank
     public String getLoginMessage()
     {
         return loginMessage;
+    }
+    
+    public String getVerifyPassword()
+    {
+        return verifyPassword;
     }
 }

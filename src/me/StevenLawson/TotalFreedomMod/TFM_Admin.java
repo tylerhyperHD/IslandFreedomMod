@@ -137,7 +137,7 @@ public class TFM_Admin
     
     public String getVerifyPassword()
     {
-        return loginMessage;
+        return verifyPassword;
     }
 
     public boolean isSeniorAdmin()

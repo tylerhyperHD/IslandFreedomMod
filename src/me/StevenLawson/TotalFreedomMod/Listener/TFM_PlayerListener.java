@@ -843,7 +843,7 @@ public class TFM_PlayerListener implements Listener
                     {
                         if (playerdata.inAdminChat())
                         {
-                            event.setCancelled(false);
+                            return;
                         }
                         else {
                         event.setCancelled(true);
@@ -866,7 +866,7 @@ public class TFM_PlayerListener implements Listener
                     {
                         if (playerdata.inAdminChat())
                         {
-                            event.setCancelled(false);
+                            return;
                         }
                         else {
                         event.setCancelled(true);
