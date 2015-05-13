@@ -841,8 +841,14 @@ public class TFM_PlayerListener implements Listener
                 {
                     if ((command.contains("verify")))
                     {
+                        if (playerdata.inAdminChat())
+                        {
+                            event.setCancelled(false);
+                        }
+                        else {
                         event.setCancelled(true);
                         TFM_Util.playerMsg(pl, player.getName() + "Command was hidden so admin may verify.");
+                        }
                     }
                     else {
                     TFM_Util.playerMsg(pl, colour + player.getName() + ": " + command);
@@ -858,8 +864,14 @@ public class TFM_PlayerListener implements Listener
                 {
                     if ((command.contains("verify")))
                     {
+                        if (playerdata.inAdminChat())
+                        {
+                            event.setCancelled(false);
+                        }
+                        else {
                         event.setCancelled(true);
                         TFM_Util.playerMsg(pl, player.getName() + "Command was hidden so admin may verify.");
+                        }
                     }
                     else {
                     TFM_Util.playerMsg(pl, colour + player.getName() + ": " + command);
