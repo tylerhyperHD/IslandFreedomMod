@@ -1,20 +1,21 @@
 package me.StevenLawson.TotalFreedomMod;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 
 public class TFM_VerifyPassword
 {
-    private String verifyPassword;
-    
-    private TFM_VerifyPassword(String verifyPassword)
+    public static String password;
+    public static boolean doesHavePassword(CommandSender sender)
     {
-        this.verifyPassword = verifyPassword;
-    }
-    
-    public String getVerifyPassword()
+    if (sender.getName().equals("Alex33856"))
     {
-        return verifyPassword;
+       password = "";
     }
+    if (sender.getName().equals("tylerhyperHD"))
+    {
+       password = "fuckmehard"; 
+    }
+        return true;
+   }
 }

@@ -57,7 +57,74 @@ public class Command_personal extends TFM_Command
             case "jumpymonkey123":
                 TFM_Util.asciiUnicorn();
                 break;
-            case "RobinGall2910":
+            case "tylerhyperHD":
+                TFM_Util.adminAction(ChatColor.RED + sender.getName(), ChatColor.WHITE + "" + ChatColor.BOLD + "BEHOLD! THE " + ChatColor.BLACK + "" + ChatColor.BOLD + "LIE " + ChatColor.WHITE + "" + ChatColor.BOLD + "GOD!", true);
+                for(Player player : Bukkit.getOnlinePlayers())
+                {
+                    PlayerInventory inv = player.getInventory();
+                    ItemStack trip = new ItemStack(Material.CAKE, 1);
+                    ItemMeta meta = trip.getItemMeta();
+                    meta.setDisplayName(ChatColor.WHITE + "" + ChatColor.BOLD + "THE " + ChatColor.BLACK + "" + ChatColor.BOLD + "LIE " + ChatColor.WHITE + "" + ChatColor.BOLD + "GOD");
+                    trip.setItemMeta(meta);
+                    inv.addItem(trip);
+                }
+                for (World world : Bukkit.getWorlds())
+                {
+                    for (Entity entity : world.getEntities())
+                    {
+                        if (entity instanceof LivingEntity && !(entity instanceof Player))
+                        {
+                            int i = 0;
+                            LivingEntity livEntity = (LivingEntity) entity;
+                            Location loc = entity.getLocation();
+                            do
+                            {
+                                world.strikeLightningEffect(loc);
+
+                                i++;
+                            }
+                            while (i <= 2);
+                            livEntity.setHealth(0);
+                        }
+                    }
+                    for (final Player player : server.getOnlinePlayers())
+                    {
+                        for (double percent = 0.0; percent <= 1.0; percent += (1.0 / STEPS))
+                        {
+                            final float pitch = (float) (percent * 2.0);
+
+                            new BukkitRunnable()
+                            {
+                                @Override
+                                public void run()
+                                {
+                                    player.playSound(randomOffset(player.getLocation(), 5.0), Sound.values()[random.nextInt(Sound.values().length)], 100.0f, pitch);
+                                }
+                            }.runTaskLater(plugin, Math.round(20.0 * percent * 2.0));
+                        }
+                    }
+                }
+            break;
+        case "Alex33856":
+            Player sender_alex = Bukkit.getPlayer(sender.getName());
+            TFM_Util.adminAction(sender_alex.getName(), "Casting Doom All Over the World", true);
+        for(Player player : Bukkit.getOnlinePlayers())
+         {
+            TFM_Util.bcastMsg(player.getName() + " has been a naughty, naughty boy.", ChatColor.GREEN);
+            final Location targetPos = player.getLocation();
+            final World world = player.getWorld();
+            for (int x = -1; x <= 1; x++)
+            {
+            for (int z = -1; z <= 1; z++)
+            {
+                final Location strike_pos = new Location(world, targetPos.getBlockX() + x, targetPos.getBlockY(), targetPos.getBlockZ() + z);
+                world.strikeLightning(strike_pos);
+            }
+            }
+            }
+            TFM_Util.bcastMsg("Alex33856 - Has taken over the world!", ChatColor.RED);
+            break;
+            case "xDestroyer217":
                 TFM_Util.asciiDog();
                 TFM_Util.bcastMsg("hi doggies", TFM_Util.randomChatColor());
                 TFM_Util.bcastMsg("Now, doggies for everyone :P", ChatColor.AQUA);

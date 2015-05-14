@@ -76,7 +76,6 @@ public class TFM_PlayerListener implements Listener
 
         public static void getPlayerName(Player player)
     {
-        
         String name = player.getName();
         String name2;
 
@@ -141,6 +140,13 @@ public class TFM_PlayerListener implements Listener
         {
             player.setPlayerListName(ChatColor.AQUA + player.getName());
             TFM_PlayerData.getPlayerData(player).setTag("&8[&bSuper-Admin&8]");
+        }
+        try
+        {
+            player.setPlayerListName(StringUtils.substring(name, 0, 16));
+        }
+        catch (IllegalArgumentException ex)
+        {
         }
     }
 
@@ -1003,14 +1009,6 @@ public class TFM_PlayerListener implements Listener
         //TODO: Cleanup
         String name = player.getName();
         TFM_PlayerListener.getPlayerName(player);
-
-        try
-        {
-            player.setPlayerListName(StringUtils.substring(name, 0, 16));
-        }
-        catch (IllegalArgumentException ex)
-        {
-        }
 
         new BukkitRunnable()
         {
