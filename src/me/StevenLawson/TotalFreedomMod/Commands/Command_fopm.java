@@ -14,7 +14,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandPermissions(level = AdminLevel.ALL, source = SourceType.BOTH)
-@CommandParameters(description = "Shows information about TotalFreedomMod or reloads it", usage = "/<command> [reload]")
+@CommandParameters(description = "Shows information about FreedomOpMod or reloads it", usage = "/<command> [reload]")
 public class Command_fopm extends TFM_Command
 {
     @Override

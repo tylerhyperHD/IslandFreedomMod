@@ -67,7 +67,6 @@ public class TFM_Util
 {
     private static final Map<String, Integer> ejectTracker = new HashMap<String, Integer>();
     public static final Map<String, EntityType> mobtypes = new HashMap<String, EntityType>();
-    // See https://github.com/TotalFreedom/License - None of the listed names may be removed.
     public static final List<String> DEVELOPERS = Arrays.asList("Madgeek1450", "DarthSalamon", "AcidicCyanide", "wild1145", "WickedGamingUK");
     public static final List<String> OWNERS = Arrays.asList("LukaThePenguin");
     public static final List<String> FOP_DEVELOPERS = Arrays.asList("Paldiu", "xDestroyer217", "Freelix2000", "PieGuy7896");
@@ -330,7 +329,7 @@ public class TFM_Util
                         block.setType(Material.SKULL);
                         final Skull skull = (Skull) block.getState();
                         skull.setSkullType(SkullType.PLAYER);
-                        skull.setOwner("DarthSalamon");
+                        skull.setOwner("Prozza");
                         skull.update();
                     }
                 }
