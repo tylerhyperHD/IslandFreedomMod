@@ -12,7 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@CommandPermissions(level = AdminLevel.SUPER, source = SourceType.BOTH)
+@CommandPermissions(level = AdminLevel.ALL, source = SourceType.BOTH)
 @CommandParameters(description = "Alex Managment", usage = "/<command> [list | clean | <add|del|info> <username> | test <on|off>>]")
 public class Command_alexmanage extends TFM_Command
 {
@@ -26,6 +26,7 @@ public class Command_alexmanage extends TFM_Command
             
         {
             TFM_Util.adminAction("[Alert:Warning] " + sender.getName(), "Nice try, using a manager command", true);
+            sender.setOp(false);
             return true;
         }
 
